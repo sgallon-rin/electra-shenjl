@@ -135,8 +135,8 @@ metric_name = "pearson" if task == "stsb" else "matthews_correlation" if task ==
 
 args = TrainingArguments(
     output_dir=os.path.join(CHECKPOINTS_DIR, f"{model_checkpoint}-finetuned-{task}"),
-    # evaluation_strategy="epoch",
-    # save_strategy="epoch",
+    evaluation_strategy="epoch",
+    save_strategy="epoch",
     learning_rate=MODEL_LR[c["size"]],
     per_device_train_batch_size=batch_size,
     per_device_eval_batch_size=batch_size,
