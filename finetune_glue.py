@@ -80,7 +80,7 @@ CHECKPOINTS_DIR = os.path.join(HOME_DIR, "checkpoints", "glue")
 assert size in MODEL_SIZES, "Size must be in {}".format(MODEL_SIZES)
 assert task in GLUE_TASKS, "Task must be in {}".format(GLUE_TASKS)
 
-model_checkpoint = "google/electra-{}-discriminator".format(c["size"])
+model_checkpoint = "google/electra-{}-discriminator".format(size)
 batch_size = 32  # follow ELECTRA
 # Num_epochs, follow ELECTRA
 if task in ['rte', 'stsb']:
