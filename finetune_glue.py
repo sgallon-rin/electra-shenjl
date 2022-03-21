@@ -11,9 +11,10 @@ import os
 import random
 import torch
 import numpy as np
-from transformers import AutoTokenizer
-from transformers import AutoModelForSequenceClassification, TrainingArguments, Trainer
+from transformers import ElectraTokenizerFast
+from transformers import ElectraForSequenceClassification, TrainingArguments, Trainer
 from datasets import load_dataset, load_metric
+import wandb
 from config import HOME_DIR, DATA_CACHE_DIR, METRIC_CACHE_DIR
 
 # Set seed
@@ -36,6 +37,9 @@ MODEL_LR = {"small": 3e-4, "base": 1e-4, "large": 5e-5}
 # Path
 CHECKPOINTS_DIR = os.path.join(HOME_DIR, "checkpoints", "glue")
 OUTPUTS_DIR = os.path.join(HOME_DIR, "test_outputs", "glue")
+
+# wandb
+wandb.init(project="electra-shenjl", entity="sgallon-rin")
 
 # Configuration
 c = {
@@ -82,7 +86,7 @@ dataset = load_dataset("glue", task, cache_dir=DATA_CACHE_DIR)
 metric = load_metric('glue', task, cache_dir=METRIC_CACHE_DIR)
 
 # Create tokenizer for respective model
-tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, use_fast=True, model_max_length=512, truncation=True)
+tokenizer = ElectraTokenizerFast.from_pretrained(model_checkpoint, use_fast=True, model_max_length=512, truncation=True)
 
 task_to_keys = {
     "cola": ("sentence", None),
@@ -119,7 +123,7 @@ encoded_dataset = dataset.map(tokenizer_func, batched=True)
 num_labels = 3 if task.startswith("mnli") else 1 if task == "stsb" else 2
 
 # Create model and attach ForSequenceClassification head
-model = AutoModelForSequenceClassification.from_pretrained(model_checkpoint, num_labels=num_labels)
+model = ElectraForSequenceClassification.from_pretrained(model_checkpoint, num_labels=num_labels)
 
 # Type of metric for given task
 metric_name = "pearson" if task == "stsb" else "matthews_correlation" if task == "cola" else "accuracy"
@@ -135,7 +139,8 @@ args = TrainingArguments(
     weight_decay=0,
     load_best_model_at_end=True,
     metric_for_best_model=metric_name,
-    eval_accumulation_steps=5
+    eval_accumulation_steps=5,
+    report_to="wandb"
 )
 
 
