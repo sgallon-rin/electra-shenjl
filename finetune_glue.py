@@ -42,20 +42,20 @@ c = {
     'device': 'cuda:0' if torch.cuda.is_available() else 'cpu',
     'batch_size': 10,
     # Vanilla ELECTRA settings
-    'weight_decay': 0,
-    'adam_bias_correction': False,
-    'xavier_reinited_outlayer': True,
-    'schedule': 'original_linear',
-    'original_lr_layer_decays': True,
-    'double_unordered': True,
+    # 'weight_decay': 0,
+    # 'adam_bias_correction': False,
+    # 'xavier_reinited_outlayer': True,
+    # 'schedule': 'original_linear',
+    # 'original_lr_layer_decays': True,
+    # 'double_unordered': True,
     # whether to do finetune or test
-    'do_finetune': True,  # True -> do finetune ; False -> do test
+    # 'do_finetune': True,  # True -> do finetune ; False -> do test
     # pretrained electra model size
     'size': 'small',
     # 'size': 'base',
     # 'size': 'large',
-    'num_workers': 3,
-    'logger': 'neptune',
+    # 'num_workers': 3,
+    # 'logger': 'neptune',
     # task to fine-tune on
     "task": "cola"
 }
@@ -109,7 +109,7 @@ def tokenizer_func(examples):
 # tokenize sentence(s)
 encoded_dataset = dataset.map(tokenizer_func, batched=True)
 
-encoded_dataset = encoded_dataset.remove_columns(column_names=["idx", "premise", "hypothesis"])
+# encoded_dataset = encoded_dataset.remove_columns(column_names=["idx", "premise", "hypothesis"])
 # encoded_dataset=encoded_dataset.remove_columns(column_names=["idx", "question", "sentence"])
 # encoded_dataset=encoded_dataset.remove_columns(column_names=["idx", "sentence1", "sentence2"])
 # encoded_dataset=encoded_dataset.remove_columns(column_names=["idx", "sentence"])
