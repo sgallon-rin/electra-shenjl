@@ -7,8 +7,7 @@
 # @Description : Download dataset with datasets package
 import datasets
 
-# CACHE_DIR = "/raid_elmo/home/lr/shenjl/data/huggingface/datasets"
-CACHE_DIR = "./data"
+from config import DATA_CACHE_DIR
 
 if __name__ == "__main__":
     # openwebtext is huge
@@ -23,4 +22,4 @@ if __name__ == "__main__":
     tasks = ['cola', 'sst2', 'mrpc', 'qqp', 'stsb', 'mnli', 'mnli_mismatched', 'mnli_matched', 'qnli', 'rte', 'wnli',
              'ax']
     for task in tasks:
-        datasets.load_dataset(dataset_name, task, cache_dir=CACHE_DIR)
+        datasets.load_dataset(dataset_name, task, cache_dir=DATA_CACHE_DIR)

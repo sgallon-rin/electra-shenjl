@@ -55,28 +55,6 @@ CHECKPOINTS_DIR = os.path.join(HOME_DIR, "checkpoints", "glue")
 # OUTPUTS_DIR = os.path.join(HOME_DIR, "test_outputs", "glue")
 
 # Configuration
-# c = {
-#     'device': 'cuda:0' if torch.cuda.is_available() else 'cpu',
-#     # 'batch_size': 10,
-#     # Vanilla ELECTRA settings
-#     # 'weight_decay': 0,
-#     # 'adam_bias_correction': False,
-#     # 'xavier_reinited_outlayer': True,
-#     # 'schedule': 'original_linear',
-#     # 'original_lr_layer_decays': True,
-#     # 'double_unordered': True,
-#     # whether to do finetune or test
-#     # 'do_finetune': True,  # True -> do finetune ; False -> do test
-#     # pretrained electra model size
-#     'size': 'small',
-#     # 'size': 'base',
-#     # 'size': 'large',
-#     # 'num_workers': 3,
-#     # 'logger': 'neptune',
-#     # task to fine-tune on
-#     "task": "cola"
-# }
-
 assert size in MODEL_SIZES, "Size must be in {}".format(MODEL_SIZES)
 assert task in GLUE_TASKS, "Task must be in {}".format(GLUE_TASKS)
 
