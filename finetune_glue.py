@@ -8,6 +8,8 @@
 # based on https://github.com/guevarsd/GLUE-Benchmark-NLP/blob/main/Code/SingleModelTraining.py
 
 import os
+import sys
+import getopt
 import random
 import torch
 import numpy as np
@@ -16,6 +18,20 @@ from transformers import ElectraForSequenceClassification, TrainingArguments, Tr
 from datasets import load_dataset, load_metric
 import wandb
 from config import HOME_DIR, DATA_CACHE_DIR, METRIC_CACHE_DIR
+
+# Commandline params for task and model
+argv = sys.argv[1:]
+task = ""
+size = ""
+try:
+    opts, args = getopt.getopt(argv, "t:s:", ["task=", "size="])
+except:
+    raise ValueError("Task and size unspecified!")
+for opt, arg in opts:
+    if opt in ['-t', '--task']:
+        task = arg
+    elif opt in ['-s', '--size']:
+        size = arg
 
 # Set seed
 SEED = 123
@@ -36,41 +52,37 @@ MODEL_LR = {"small": 3e-4, "base": 1e-4, "large": 5e-5}
 
 # Path
 CHECKPOINTS_DIR = os.path.join(HOME_DIR, "checkpoints", "glue")
-OUTPUTS_DIR = os.path.join(HOME_DIR, "test_outputs", "glue")
-
-# wandb
-wandb.init(project="electra-shenjl", entity="sgallon-rin")
+# OUTPUTS_DIR = os.path.join(HOME_DIR, "test_outputs", "glue")
 
 # Configuration
-c = {
-    'device': 'cuda:0' if torch.cuda.is_available() else 'cpu',
-    # 'batch_size': 10,
-    # Vanilla ELECTRA settings
-    # 'weight_decay': 0,
-    # 'adam_bias_correction': False,
-    # 'xavier_reinited_outlayer': True,
-    # 'schedule': 'original_linear',
-    # 'original_lr_layer_decays': True,
-    # 'double_unordered': True,
-    # whether to do finetune or test
-    # 'do_finetune': True,  # True -> do finetune ; False -> do test
-    # pretrained electra model size
-    'size': 'small',
-    # 'size': 'base',
-    # 'size': 'large',
-    # 'num_workers': 3,
-    # 'logger': 'neptune',
-    # task to fine-tune on
-    "task": "cola"
-}
+# c = {
+#     'device': 'cuda:0' if torch.cuda.is_available() else 'cpu',
+#     # 'batch_size': 10,
+#     # Vanilla ELECTRA settings
+#     # 'weight_decay': 0,
+#     # 'adam_bias_correction': False,
+#     # 'xavier_reinited_outlayer': True,
+#     # 'schedule': 'original_linear',
+#     # 'original_lr_layer_decays': True,
+#     # 'double_unordered': True,
+#     # whether to do finetune or test
+#     # 'do_finetune': True,  # True -> do finetune ; False -> do test
+#     # pretrained electra model size
+#     'size': 'small',
+#     # 'size': 'base',
+#     # 'size': 'large',
+#     # 'num_workers': 3,
+#     # 'logger': 'neptune',
+#     # task to fine-tune on
+#     "task": "cola"
+# }
 
-assert c["size"] in MODEL_SIZES, "Size must be in {}".format(MODEL_SIZES)
-assert c["task"] in GLUE_TASKS, "Task must be in {}".format(GLUE_TASKS)
+assert size in MODEL_SIZES, "Size must be in {}".format(MODEL_SIZES)
+assert task in GLUE_TASKS, "Task must be in {}".format(GLUE_TASKS)
 
-task = c["task"]
 model_checkpoint = "google/electra-{}-discriminator".format(c["size"])
-batch_size = 8 if task == "qnli" else 10  # 10 normally, 8 for qnli
-# Num_epochs
+batch_size = 32  # follow ELECTRA
+# Num_epochs, follow ELECTRA
 if task in ['rte', 'stsb']:
     num_epochs = 10
 else:
@@ -85,6 +97,10 @@ if ckpt_path in os.listdir():
         print('Continuing.')
     else:
         raise ValueError('Stopping Process.')
+
+# wandb
+wandb_config = {"task": task, "size": size, "ckpt_path": ckpt_path}
+wandb.init(project="electra-shenjl", entity="sgallon-rin", config=wandb_config)
 
 # Load dataset based on task variable
 dataset = load_dataset("glue", task, cache_dir=DATA_CACHE_DIR)
@@ -137,11 +153,15 @@ args = TrainingArguments(
     output_dir=os.path.join(CHECKPOINTS_DIR, f"{model_checkpoint}-finetuned-{task}"),
     evaluation_strategy="epoch",
     save_strategy="epoch",
-    learning_rate=MODEL_LR[c["size"]],
+    learning_rate=MODEL_LR[size],
+    weight_decay=0,
+    adam_epsilon=1e-6,
+    adam_beta1=0.9,
+    adam_beta2=0.999,
+    warmup_ratio=0.1,
     per_device_train_batch_size=batch_size,
     per_device_eval_batch_size=batch_size,
     num_train_epochs=num_epochs,
-    weight_decay=0,
     load_best_model_at_end=True,
     metric_for_best_model=metric_name,
     eval_accumulation_steps=5,
@@ -161,12 +181,12 @@ def compute_metrics(eval_pred):
 
 validation_key = "validation_mismatched" if task == "mnli-mm" else "validation_matched" if task == "mnli" else "validation"
 trainer = Trainer(
-     model,
-     args=args,
-     train_dataset=encoded_dataset["train"],
-     eval_dataset=encoded_dataset[validation_key],
-     tokenizer=tokenizer,
-     compute_metrics=compute_metrics
+    model,
+    args=args,
+    train_dataset=encoded_dataset["train"],
+    eval_dataset=encoded_dataset[validation_key],
+    tokenizer=tokenizer,
+    compute_metrics=compute_metrics
 )
 
 trainer.train()
