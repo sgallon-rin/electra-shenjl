@@ -1,12 +1,23 @@
 # Deep learning group study
+2022.03.22
 
 ## Finetune ELECTRA on GLUE
 
-The implementation is based on https://github.com/richarddwang/electra_pytorch
+I referred to implementations from
+https://github.com/richarddwang/electra_pytorch
+and
+https://github.com/guevarsd/GLUE-Benchmark-NLP
+
+### Major packages used
+```
+transformers
+datasets
+wandb
+```
 
 ## Tips
 
-### Packages `transformers` and `dataset`
+### Packages `transformers` and `datasets`
 
 #### Cache management
 
@@ -48,3 +59,7 @@ Traceback (most recent call last):
     raise FileNotFoundError(error_msg)
 FileNotFoundError: Unable to resolve any data file that matches '['**train*']' at /raid_elmo/home/lr/shenjl/data/glue with any supported extension ['csv', 'tsv', 'json', 'jsonl', 'parquet', 'txt', 'zip']
 ```
+
+### Online logging with `wandb`
+
+Refer to https://wandb.ai for details.
