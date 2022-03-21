@@ -7,13 +7,20 @@
 # @Description : Download dataset with datasets package
 import datasets
 
-
-def download(dataset_name="openwebtext"):
-    datasets.load_dataset(dataset_name)
-
+# CACHE_DIR = "/raid_elmo/home/lr/shenjl/data/huggingface/datasets"
+CACHE_DIR = "./data"
 
 if __name__ == "__main__":
-    dataset_name = "openwebtext"
-    print("Downloading dataset {}".format(dataset_name))
-    download(dataset_name)
-    print("Dataset successfully downloaded!")
+    # openwebtext is huge
+    # https://huggingface.co/datasets/openwebtext
+    # dataset_name = "openwebtext"
+    # datasets.load_dataset(dataset_name, cache_dir=CACHE_DIR)
+
+    # glue benchmark
+    # must specify task while downloading
+    # https://huggingface.co/datasets/glue
+    dataset_name = "glue"
+    tasks = ['cola', 'sst2', 'mrpc', 'qqp', 'stsb', 'mnli', 'mnli_mismatched', 'mnli_matched', 'qnli', 'rte', 'wnli',
+             'ax']
+    for task in tasks:
+        datasets.load_dataset(dataset_name, task, cache_dir=CACHE_DIR)
