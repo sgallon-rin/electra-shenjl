@@ -44,7 +44,7 @@ wandb.init(project="electra-shenjl", entity="sgallon-rin")
 # Configuration
 c = {
     'device': 'cuda:0' if torch.cuda.is_available() else 'cpu',
-    'batch_size': 10,
+    # 'batch_size': 10,
     # Vanilla ELECTRA settings
     # 'weight_decay': 0,
     # 'adam_bias_correction': False,
@@ -69,7 +69,12 @@ assert c["task"] in GLUE_TASKS, "Task must be in {}".format(GLUE_TASKS)
 
 task = c["task"]
 model_checkpoint = "google/electra-{}-discriminator".format(c["size"])
-batch_size = c["batch_size"]  # 10 normally, 8 for qnli
+batch_size = 8 if task == "qnli" else 10  # 10 normally, 8 for qnli
+# Num_epochs
+if task in ['rte', 'stsb']:
+    num_epochs = 10
+else:
+    num_epochs = 3
 
 # Verify baseline not already established
 ckpt_path = os.path.join(CHECKPOINTS_DIR, model_checkpoint + "_tuned_" + task)
@@ -129,18 +134,19 @@ model = ElectraForSequenceClassification.from_pretrained(model_checkpoint, num_l
 metric_name = "pearson" if task == "stsb" else "matthews_correlation" if task == "cola" else "accuracy"
 
 args = TrainingArguments(
-    f"{model_checkpoint}-finetuned-{task}",
-    evaluation_strategy="epoch",
-    save_strategy="epoch",
+    output_dir=os.path.join(CHECKPOINTS_DIR, f"{model_checkpoint}-finetuned-{task}"),
+    # evaluation_strategy="epoch",
+    # save_strategy="epoch",
     learning_rate=MODEL_LR[c["size"]],
     per_device_train_batch_size=batch_size,
     per_device_eval_batch_size=batch_size,
-    num_train_epochs=1,
+    num_train_epochs=num_epochs,
     weight_decay=0,
     load_best_model_at_end=True,
     metric_for_best_model=metric_name,
     eval_accumulation_steps=5,
-    report_to="wandb"
+    report_to="wandb",
+    logging_steps=100
 )
 
 
@@ -155,12 +161,12 @@ def compute_metrics(eval_pred):
 
 validation_key = "validation_mismatched" if task == "mnli-mm" else "validation_matched" if task == "mnli" else "validation"
 trainer = Trainer(
-    model,
-    args,
-    train_dataset=encoded_dataset["train"],
-    eval_dataset=encoded_dataset[validation_key],
-    tokenizer=tokenizer,
-    compute_metrics=compute_metrics
+     model,
+     args=args,
+     train_dataset=encoded_dataset["train"],
+     eval_dataset=encoded_dataset[validation_key],
+     tokenizer=tokenizer,
+     compute_metrics=compute_metrics
 )
 
 trainer.train()
