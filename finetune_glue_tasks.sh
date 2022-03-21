@@ -11,7 +11,7 @@ do
   echo "Finished finetuning for size-small task-${task}"
 done
 
-glue_tasks_base=("mrpc" "qnli" "qqp" "rte" "sst2" "stsb" "wnli")
+glue_tasks_base=("mnli" "mrpc" "qnli" "qqp" "rte" "sst2" "stsb" "wnli")
 for task in ${glue_tasks_base[*]}
 do
   echo "Start finetuning for size-base task-${task}"
