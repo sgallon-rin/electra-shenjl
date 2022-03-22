@@ -1,0 +1,126 @@
+Time: Tue Mar 22 11:38:10 2022
+Task: cola
+Model size: small
+Metric name: matthews_correlation
+Test metric value: {'eval_loss': 0.5358856916427612, 'eval_matthews_correlation': 0.43942052933004133, 'eval_runtime': 3.7234, 'eval_samples_per_second': 280.122, 'eval_steps_per_second': 4.566}
+
+Time: Tue Mar 22 11:39:10 2022
+Task: cola
+Model size: base
+Metric name: matthews_correlation
+Test metric value: {'eval_loss': 0.4973621964454651, 'eval_matthews_correlation': 0.6675801687368478, 'eval_runtime': 4.5682, 'eval_samples_per_second': 228.318, 'eval_steps_per_second': 3.721}
+
+Time: Tue Mar 22 11:41:31 2022
+Task: cola
+Model size: large
+Metric name: matthews_correlation
+Test metric value: {'eval_loss': 0.3310481905937195, 'eval_matthews_correlation': 0.7099577392257762, 'eval_runtime': 7.5136, 'eval_samples_per_second': 138.816, 'eval_steps_per_second': 2.263}
+
+Time: Tue Mar 22 11:44:13 2022
+Task: mnli
+Model size: small
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.5452011823654175, 'eval_accuracy': 0.7940906775343861, 'eval_runtime': 10.0465, 'eval_samples_per_second': 976.953, 'eval_steps_per_second': 15.329}
+
+Time: Tue Mar 22 11:45:59 2022
+Task: mnli
+Model size: base
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.4377508759498596, 'eval_accuracy': 0.8767193071828834, 'eval_runtime': 20.6619, 'eval_samples_per_second': 475.029, 'eval_steps_per_second': 7.453}
+
+Time: Tue Mar 22 11:48:03 2022
+Task: mrpc
+Model size: small
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.41928836703300476, 'eval_accuracy': 0.8455882352941176, 'eval_f1': 0.8926746166950595, 'eval_runtime': 3.4882, 'eval_samples_per_second': 116.967, 'eval_steps_per_second': 2.007}
+
+Time: Tue Mar 22 11:48:53 2022
+Task: mrpc
+Model size: base
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.3661770224571228, 'eval_accuracy': 0.8897058823529411, 'eval_f1': 0.9206349206349206, 'eval_runtime': 3.7497, 'eval_samples_per_second': 108.808, 'eval_steps_per_second': 1.867}
+
+Time: Tue Mar 22 11:49:58 2022
+Task: mrpc
+Model size: large
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.281602144241333, 'eval_accuracy': 0.9044117647058824, 'eval_f1': 0.9302325581395349, 'eval_runtime': 5.1928, 'eval_samples_per_second': 78.57, 'eval_steps_per_second': 1.348}
+
+Time: Tue Mar 22 11:51:16 2022
+Task: qnli
+Model size: small
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.35404646396636963, 'eval_accuracy': 0.8616144975288303, 'eval_runtime': 6.9886, 'eval_samples_per_second': 781.707, 'eval_steps_per_second': 12.306}
+
+Time: Tue Mar 22 11:54:16 2022
+Task: qqp
+Model size: small
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.26434698700904846, 'eval_accuracy': 0.8918872124659906, 'eval_f1': 0.856712014423865, 'eval_runtime': 32.0557, 'eval_samples_per_second': 1261.242, 'eval_steps_per_second': 19.716}
+
+Time: Tue Mar 22 11:57:14 2022
+Task: qqp
+Model size: base
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.2584734261035919, 'eval_accuracy': 0.9159534998763295, 'eval_f1': 0.8873416882169618, 'eval_runtime': 74.8127, 'eval_samples_per_second': 540.416, 'eval_steps_per_second': 8.448}
+
+Time: Tue Mar 22 11:58:08 2022
+Task: rte
+Model size: small
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.6917688846588135, 'eval_accuracy': 0.5270758122743683, 'eval_runtime': 3.2343, 'eval_samples_per_second': 85.644, 'eval_steps_per_second': 1.546}
+
+Time: Tue Mar 22 11:58:57 2022
+Task: rte
+Model size: base
+Metric name: accuracy
+Test metric value: {'eval_loss': 1.0824506282806396, 'eval_accuracy': 0.8158844765342961, 'eval_runtime': 3.587, 'eval_samples_per_second': 77.223, 'eval_steps_per_second': 1.394}
+
+Time: Tue Mar 22 11:59:41 2022
+Task: sst2
+Model size: small
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.3800823390483856, 'eval_accuracy': 0.8795871559633027, 'eval_runtime': 3.5243, 'eval_samples_per_second': 247.423, 'eval_steps_per_second': 3.972}
+
+Time: Tue Mar 22 12:00:25 2022
+Task: sst2
+Model size: base
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.20541232824325562, 'eval_accuracy': 0.9380733944954128, 'eval_runtime': 4.4093, 'eval_samples_per_second': 197.765, 'eval_steps_per_second': 3.175}
+
+Time: Tue Mar 22 12:02:25 2022
+Task: stsb
+Model size: small
+Metric name: pearson
+Test metric value: {'eval_loss': 0.5351923704147339, 'eval_pearson': 0.8793834883615361, 'eval_spearmanr': 0.8752259689948683, 'eval_runtime': 4.0418, 'eval_samples_per_second': 371.118, 'eval_steps_per_second': 5.938}
+
+Time: Tue Mar 22 12:03:49 2022
+Task: stsb
+Model size: base
+Metric name: pearson
+Test metric value: {'eval_loss': 0.43057742714881897, 'eval_pearson': 0.9115737696230416, 'eval_spearmanr': 0.9097629251521329, 'eval_runtime': 5.3375, 'eval_samples_per_second': 281.032, 'eval_steps_per_second': 4.497}
+
+Time: Tue Mar 22 12:04:42 2022
+Task: wnli
+Model size: small
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.6843766570091248, 'eval_accuracy': 0.5633802816901409, 'eval_runtime': 3.0372, 'eval_samples_per_second': 23.377, 'eval_steps_per_second': 0.659}
+
+Time: Tue Mar 22 12:05:23 2022
+Task: wnli
+Model size: base
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.6903928518295288, 'eval_accuracy': 0.5633802816901409, 'eval_runtime': 3.1542, 'eval_samples_per_second': 22.51, 'eval_steps_per_second': 0.634}
+
+Time: Tue Mar 22 12:15:51 2022
+Task: wnli
+Model size: large
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.439627081155777, 'eval_accuracy': 0.8732394366197183, 'eval_runtime': 3.6285, 'eval_samples_per_second': 19.567, 'eval_steps_per_second': 0.551}
+
+Time: Tue Mar 22 13:11:25 2022
+Task: sst2
+Model size: large
+Metric name: accuracy
+Test metric value: {'eval_loss': 0.7027202844619751, 'eval_accuracy': 0.5091743119266054, 'eval_runtime': 7.1052, 'eval_samples_per_second': 122.727, 'eval_steps_per_second': 1.97}
+
