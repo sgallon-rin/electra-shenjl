@@ -15,6 +15,19 @@ datasets
 wandb
 ```
 
+### Usage
+
+To fine-tune on a task `task_name` ("cola", "mnli", "mrpc", "qnli", "qqp", "rte", "sst2", "stsb", "wnli") 
+with ELECTRA model size `model_size` ("small", "base", "large") 
+```
+$ python finetune_glue.py -t task_name -s model_size
+```
+
+To run test
+```
+$ python test_glue.py -t task_name -s model_size
+```
+
 ## Tips
 
 ### Packages `transformers` and `datasets`
