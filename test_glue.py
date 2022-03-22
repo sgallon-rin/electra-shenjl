@@ -25,7 +25,7 @@ argv = sys.argv[1:]
 task = ""
 size = ""
 try:
-    opts, args = getopt.getopt(argv, "s:", ["task=", "size="])
+    opts, args = getopt.getopt(argv, "t:s:", ["task=", "size="])
 except:
     raise ValueError("Task and size unspecified!")
 for opt, arg in opts:
