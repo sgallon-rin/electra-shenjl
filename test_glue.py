@@ -69,8 +69,8 @@ ckpt_path = os.path.join(CHECKPOINTS_DIR, model_checkpoint + "_tuned_" + task)
 #     raise ValueError('Checkpoint not found: {}. Stopping Process.'.format(ckpt_path))
 
 # wandb
-# wandb_config = {"task": task + "_eval", "size": size, "ckpt_path": ckpt_path}
-# wandb.init(project="electra-shenjl", entity="sgallon-rin", config=wandb_config)
+wandb_config = {"task": task + "_test", "size": size, "ckpt_path": ckpt_path}
+wandb.init(project="electra-shenjl-test", entity="sgallon-rin", config=wandb_config)
 
 # Load dataset based on task variable
 dataset = load_dataset("glue", task, cache_dir=DATA_CACHE_DIR)
@@ -126,7 +126,7 @@ args = TrainingArguments(
     per_device_eval_batch_size=batch_size,
     metric_for_best_model=metric_name,
     eval_accumulation_steps=5,
-    # report_to="wandb"
+    report_to="wandb"
 )
 
 
