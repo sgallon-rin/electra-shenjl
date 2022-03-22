@@ -65,8 +65,8 @@ batch_size = 32  # follow ELECTRA
 # Verify baseline already established
 ckpt_path = os.path.join(CHECKPOINTS_DIR, model_checkpoint + "_tuned_" + task)
 
-if ckpt_path not in os.listdir():
-    raise ValueError('Checkpoint not found: {}. Stopping Process.'.format(ckpt_path))
+# if ckpt_path not in os.listdir():
+#     raise ValueError('Checkpoint not found: {}. Stopping Process.'.format(ckpt_path))
 
 # wandb
 # wandb_config = {"task": task + "_eval", "size": size, "ckpt_path": ckpt_path}
